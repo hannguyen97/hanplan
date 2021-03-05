@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { useDispatch } from 'react-redux';
+import {createProject} from '../../store/actions/projectAction';
+import {getFirestore } from 'redux-firestore'
 
 function CreateProject(props) {
-
+  const dispatch = useDispatch();
   const [createproject, setCreateProject]=useState({
     title :'',
     content :''
   })
   function handleChange (e){
-   
-   
-    setCreateProject((createproject) => ({ ...createproject, [e.target.id]: e.target.value }));
-    
+    setCreateProject((createproject) => ({ ...createproject, [e.target.id]: e.target.value }))
   }
   const handleSubmit =(e)=>{
     e.preventDefault();
-    console.log("this state",createproject)
+    dispatch(createProject(createproject));
   }
+  
+
+
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className="white">
